@@ -36,7 +36,7 @@ export default function Hero() {
               className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
               
             >
-               a polished product site in weeks, not months.
+              Launch a polished product site in weeks, not months.
               <span className="text-white/70"> Without fighting the frontend details.</span>
             </motion.h1>
 
