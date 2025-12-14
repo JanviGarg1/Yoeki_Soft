@@ -30,25 +30,27 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
-        <a href="#" className="group inline-flex items-center gap-2">
+        <motion.a href="#" whileHover={{ scale: 1.05 }} className="group inline-flex items-center gap-2">
           <span className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-sm font-semibold shadow-glow">
             N
           </span>
+          
           <span className="text-sm font-semibold tracking-wide text-white">
             NovaSphere<span className="text-white/50">.studio</span>
           </span>
-        </a>
+        </motion.a>
 
 
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <a
+            <motion.a
               key={l.href}
               href={l.href}
+              whileHover={{ scale: 1.05 }}
               className="text-sm font-medium text-white/70 transition hover:text-white"
             >
               {l.label}
-            </a>
+            </motion.a>
           ))}
           <a
             href="#contact"

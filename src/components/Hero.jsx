@@ -13,7 +13,6 @@ const stats = [
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Background glow */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -left-24 top-56 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
@@ -35,6 +34,7 @@ export default function Hero() {
             <motion.h1
               variants={fadeUp}
               className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+              
             >
               Launch a polished product site in weeks, not months.
               <span className="text-white/70"> Without fighting the frontend details.</span>
@@ -63,7 +63,7 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-10 grid grid-cols-3 gap-3 max-w-lg">
+            <motion.div variants={fadeUp} className="mt-10 grid grid-cols-3 gap-3 max-w-lg animate-floaty">
               {stats.map((s) => (
                 <div
                   key={s.label}
@@ -139,10 +139,6 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="pointer-events-none absolute -bottom-6 -left-6 hidden w-56 rotate-[-6deg] rounded-3xl border border-white/10 bg-white/5 p-4 shadow-glow sm:block animate-floaty">
-              <p className="text-xs font-semibold text-white">“Best site refresh we’ve had in years.”</p>
-              <p className="mt-2 text-xs text-white/60">— Product Lead</p>
-            </div>
           </motion.div>
         </div>
       </Container>
