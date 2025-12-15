@@ -21,7 +21,6 @@ const services = [
 ]
 
 function StoryCard({ item, index, total, progress }) {
-  // Overlap so there is always *some* card visible while scrolling
   const pad = 0.06
   const baseStart = index / total
   const baseEnd = (index + 1) / total
@@ -59,7 +58,6 @@ function StoryCard({ item, index, total, progress }) {
 
         <p className="mt-4 text-sm leading-relaxed text-white/70">{item.desc}</p>
 
-        {/* “service object” mini graphic */}
         <div className="mt-6 grid grid-cols-3 gap-3">
           {[0, 1, 2].map((i) => (
             <motion.div
