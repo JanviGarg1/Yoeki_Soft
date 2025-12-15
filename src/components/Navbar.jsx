@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Container from './Container'
+import ScrollProgress from './ScrollProgress'
 
 const links = [
   { label: 'Services', href: '#services' },
@@ -13,9 +14,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
@@ -27,21 +26,36 @@ export default function Navbar() {
     }
   }, [open])
 
+  const handleMobileNav = (href) => {
+    setOpen(false)
+
+    requestAnimationFrame(() => {
+      const el = document.querySelector(href)
+      el?.scrollIntoView({ behavior: 'smooth' })
+      window.history.pushState(null, '', href)
+    })
+  }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur relative">
+      <ScrollProgress />
+
       <Container className="flex h-16 items-center justify-between">
-        <motion.a href="#" whileHover={{ scale: 1.05 }} className="group inline-flex items-center gap-2">
+        <motion.a
+          href="#"
+          whileHover={{ scale: 1.05 }}
+          className="group inline-flex items-center gap-2"
+        >
           <span className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-sm font-semibold shadow-glow">
             N
           </span>
-          
           <span className="text-sm font-semibold tracking-wide text-white">
             NovaSphere<span className="text-white/50">.studio</span>
           </span>
         </motion.a>
 
-
-        <nav className="hidden items-center gap-8 md:flex">
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-6 md:flex">
           {links.map((l) => (
             <motion.a
               key={l.href}
@@ -70,8 +84,9 @@ export default function Navbar() {
         </button>
       </Container>
 
+      {/* Mobile menu */}
       <AnimatePresence>
-        {open ? (
+        {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -82,26 +97,25 @@ export default function Navbar() {
             <Container className="py-4">
               <div className="flex flex-col gap-3">
                 {links.map((l) => (
-                  <a
+                  <button
                     key={l.href}
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80"
+                    onClick={() => handleMobileNav(l.href)}
+                    className="text-left rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80"
                   >
                     {l.label}
-                  </a>
+                  </button>
                 ))}
-                <a
-                  href="#contact"
-                  onClick={() => setOpen(false)}
+
+                <button
+                  onClick={() => handleMobileNav('#contact')}
                   className="rounded-xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-950"
                 >
                   Let&apos;s talk
-                </a>
+                </button>
               </div>
             </Container>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
     </header>
   )

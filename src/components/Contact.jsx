@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, MapPin, Send } from "lucide-react";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
-import { fadeUp, stagger } from "../lib/motion";
+import { fadeUp, stagger, staggerTight } from "../lib/motion";
 
 const initialState = {
   name: "",
@@ -23,7 +23,7 @@ export default function Contact() {
 
   function onChange(e) {
     const { name, value } = e.target;
-     setStatus({ state: 'idle', message: '' })
+    setStatus({ state: "idle", message: "" });
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
@@ -80,7 +80,8 @@ export default function Contact() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-5">
             <motion.div variants={fadeUp} className="lg:col-span-2">
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glow">
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 shadow-glow">
+
                 <p className="text-sm font-semibold text-white">
                   Fast response. Clear next steps.
                 </p>
@@ -89,8 +90,11 @@ export default function Contact() {
                   plan, timeline, and next steps.
                 </p>
 
-                <div className="mt-6 space-y-4">
-                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/30 p-4">
+                <motion.div variants={staggerTight} className="mt-6 space-y-4">
+                  <motion.div
+                    variants={fadeUp}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/30 p-4"
+                  >
                     <span className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5">
                       <Mail size={18} className="text-white/80" />
                     </span>
@@ -102,9 +106,12 @@ export default function Contact() {
                         hello@novasphere.studio
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/30 p-4">
+                  <motion.div
+                    variants={fadeUp}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/30 p-4"
+                  >
                     <span className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5">
                       <MapPin size={18} className="text-white/80" />
                     </span>
@@ -116,26 +123,34 @@ export default function Contact() {
                         Remote • Worldwide
                       </p>
                     </div>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
-                <div className="mt-6 rounded-2xl border border-white/10 bg-slate-950/30 p-4">
+                <motion.div
+                  variants={fadeUp}
+                  className="mt-6 rounded-2xl border border-white/10 bg-slate-950/30 p-4"
+                >
                   <p className="text-xs font-semibold uppercase tracking-widest text-white/50">
                     What you’ll get
                   </p>
-                  <ul className="mt-3 space-y-2 text-sm text-white/70">
-                    {[
-                      "Timeline + scope",
-                      "Price estimate",
-                      "Launch checklist",
-                    ].map((i) => (
-                      <li key={i} className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
-                        {i}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <motion.ul
+                    variants={staggerTight}
+                    className="mt-3 space-y-2 text-sm text-white/70"
+                  >
+                    {["Timeline + scope", "Price estimate", "Launch checklist"].map(
+                      (i) => (
+                        <motion.li
+                          key={i}
+                          variants={fadeUp}
+                          className="flex items-center gap-2"
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
+                          {i}
+                        </motion.li>
+                      )
+                    )}
+                  </motion.ul>
+                </motion.div>
               </div>
             </motion.div>
 
@@ -223,26 +238,27 @@ export default function Contact() {
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <p
-                    className={`text-sm ${
-                      status.state === "success"
+                    className={`text-sm ${status.state === "success"
                         ? "text-emerald-300"
                         : status.state === "error"
-                        ? "text-red-300"
-                        : "text-white/60"
-                    }`}
+                          ? "text-red-300"
+                          : "text-white/60"
+                      }`}
                     aria-live="polite"
                   >
                     {status.message || "We typically reply within 24 hours."}
                   </p>
 
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={!canSubmit || status.state === "loading"}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {status.state === "loading" ? "Sending…" : "Send message"}
                     <Send size={16} />
-                  </button>
+                  </motion.button>
                 </div>
               </form>
             </motion.div>
